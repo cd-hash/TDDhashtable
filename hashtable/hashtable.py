@@ -18,3 +18,21 @@ class HashTable:
         '''
         index: int = hash(key) % len(self)
         self.values[index] = value
+
+    def __getitem__(self, key):
+        index: int = hash(key) % len(self)
+        value = self.values[index]
+        if value is not BLANK:
+            return value
+        else:
+            raise KeyError(key)
+
+    def __contains__(self, key):
+        try:
+            self[key]
+        except KeyError:
+            return False
+        else:
+            return True
+
+        
