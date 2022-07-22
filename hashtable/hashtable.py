@@ -1,12 +1,12 @@
-from hashtable.hashtable_utils import BLANK
+from hashtable.hashtable_utils import Pair
 
 class HashTable:
     def __init__(self, capacity: int):
         # fill a list of some length N and give it default values
-        self.values: list[BLANK] = capacity * [BLANK]
+        self.pairs: list[None] = capacity * [None]
 
     def __len__(self) -> int:
-        return len(self.values)
+        return len(self.pairs)
 
     def __setitem__(self, key, value): # this implements the dict[key] = value
         '''
@@ -16,20 +16,17 @@ class HashTable:
         space. Great! Your test report lights up green
         again.
         '''
-        index: int = self.__index(key)
-        self.values[index] = value
+        self.pairs[self.__index(key)] = Pair(key, value)
 
     def __getitem__(self, key): # this implements the dict[key] returns value
-        index: int = self.__index(key)
-        value = self.values[index]
-        if value is not BLANK:
-            return value
-        else:
+        pair = self.pairs[self._index(key)]
+        if pair is None:
             raise KeyError(key)
+        return pair.value
 
     def __contains__(self, key): # this lets us use the 'in' operator
         try:
-            self[key]
+            self[self.__index(key)]
         except KeyError:
             return False
         else:
@@ -37,13 +34,13 @@ class HashTable:
 
     def get(self, key, default=None):
         try:
-            return self[key]
+            return self[self.__index(key)]
         except KeyError:
             return default
 
     def __delitem__(self, key): # this lets us use the del operator
         if key in self:
-            self[key] = BLANK
+            self[self.__index(key)] = None
         else:
             raise KeyError(key)
 
