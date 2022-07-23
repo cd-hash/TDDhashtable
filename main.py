@@ -1,22 +1,10 @@
 from hashtable.hashtable import HashTable
 
-def hash_table():
-    sample_data = HashTable(capacity=100)
-    sample_data["hola"] = "hello"
-    sample_data[98.6] = 37
-    sample_data[False] = True
-    return sample_data
+dictionary = {"hola": "hello", 98.6: 37, False: True}
 
-hash_table = hash_table()
+hash_table = HashTable.from_dict(dictionary)
 
-assert "hola" in hash_table
-assert ("hola", "hello") in hash_table.pairs
-assert len(hash_table) == 3
-
-print(hash_table.pairs)
-del hash_table["hola"]
-print(hash_table.pairs)
-assert "hola" not in hash_table
-
-assert ("hola", "hello") not in hash_table.pairs
-assert len(hash_table) == 2
+assert hash_table.capacity == len(dictionary) * 10
+assert hash_table.keys == set(dictionary.keys())
+assert hash_table.pairs == set(dictionary.items())
+assert unordered(hash_table.values) == list(dictionary.values())
