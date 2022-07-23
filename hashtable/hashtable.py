@@ -6,7 +6,7 @@ class HashTable:
         self._pairs: list[None] = capacity * [None]
 
     def __len__(self) -> int:
-        return len(self._pairs)
+        return len(self.pairs)
 
     def __setitem__(self, key, value): # this implements the dict[key] = value
         '''
@@ -40,13 +40,21 @@ class HashTable:
 
     def __delitem__(self, key): # this lets us use the del operator
         if key in self:
-            self[self._index(key)] = None
+            self._pairs[self._index(key)] = None
         else:
             raise KeyError(key)
 
+    def _index(self, key):
+        return hash(key) % len(self._pairs)
+
+    @property
+    def values(self):
+        return [pair.value for pair in self.pairs]
+
     @property
     def pairs(self):
-        return [pair for pair in self._pairs if pair]
-        
-    def _index(self, key):
-        return hash(key) % len(self)
+        return {pair for pair in self._pairs if pair}
+
+    @property
+    def keys(self):
+        return {pair.key for pair in self.pairs}

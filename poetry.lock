@@ -266,6 +266,17 @@ tomli = ">=1.0.0"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-unordered"
+version = "0.5.1"
+description = "Test equality of unordered collections in pytest"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pytest = ">=6.0.0"
+
+[[package]]
 name = "replit"
 version = "3.2.4"
 description = "A library for interacting with features of repl.it"
@@ -365,7 +376,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "79ce566d594bcaa5eeaa8d3c714e6c42d782e561d01428918d7cdf92014bcb99"
+content-hash = "b156a76475ba8a70c0eded309f3d251a4b8e821c639694721179abfcf5afe239"
 
 [metadata.files]
 aiohttp = []
@@ -392,6 +403,7 @@ pluggy = []
 py = []
 pyparsing = []
 pytest = []
+pytest-unordered = []
 replit = []
 requests = []
 tomli = []
