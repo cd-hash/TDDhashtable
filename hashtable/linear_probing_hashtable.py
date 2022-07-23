@@ -1,11 +1,17 @@
 from hashtable.hashtable_utils import Pair, DELETED
 
 class HashTable:
-    def __init__(self, capacity: int = 8):
-        # fill a list of some length N and give it default values
+    """
+    this hash table implements linear probing which is an open addressing technique
+    """
+    def __init__(self, capacity=8, load_factor_threshold=0.6):
         if capacity < 1:
             raise ValueError("Capacity must be a positive number")
-        self._slots: list[None] = capacity * [None]
+        if not (0 < load_factor_threshold <= 1):
+            raise ValueError("Load factor must be a number between (0, 1]")
+        # fill a list of some length N and give it default values
+        self._slots = capacity * [None]
+        self._load_factor_threshold = load_factor_threshold
 
     @classmethod
     def from_dict(cls, dictionary, capacity=None):
@@ -25,6 +31,9 @@ class HashTable:
         space. Great! Your test report lights up green
         again.
         '''
+        if self.load_factor >= self._load_factor_threshold:
+            self._resize_and_rehash()
+            
         for index, pair in self._probe(key):
             if pair is DELETED: continue
             if pair is None or pair.key == key:
@@ -126,3 +135,8 @@ class HashTable:
     @property
     def capacity(self):
         return len(self._slots)
+
+    @property
+    def load_factor(self):
+        occupied_or_deleted = [slot for slot in self._slots if slot]
+        return len(occupied_or_deleted) / self.capacity
